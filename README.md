@@ -9,6 +9,7 @@ Install dependencies with `npm install`.
 Use the `psql -U development` command to login to the PostgreSQL server with the username `development` and the password `development`. This command **MUST** be run in a vagrant terminal, we are using the PostgreSQL installation provided in the vagrant environment.
 
 Create a database with the command `CREATE DATABASE scheduler_development;`.
+CREATE DATABASE scheduler_test;
 
 Copy the `.env.example` file to `.env.development` and fill in the necessary PostgreSQL configuration. The `node-postgres` library uses these environment variables by default.
 
@@ -41,6 +42,12 @@ npm start
 Running the server so it returns an error when saving/deleting for testing the client's error handling capabilities
 ```sh
 npm run error
+```
+
+## Test data for the client
+
+```
+npm run test:server
 ```
 
 ## Api

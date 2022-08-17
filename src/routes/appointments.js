@@ -19,7 +19,10 @@ module.exports = (db, updateAppointment) => {
     ).then(({ rows: appointments }) => {
       response.json(
         appointments.reduce(
-          (previous, current) => ({ ...previous, [current.id]: current }),
+          (previous, current) => ({
+            ...previous,
+            [current.id]: current,
+          }),
           {}
         )
       );
@@ -45,10 +48,13 @@ module.exports = (db, updateAppointment) => {
       .then(() => {
         setTimeout(() => {
           response.status(204).json({});
-          updateAppointment(Number(request.params.id), request.body.interview);
+          updateAppointment(
+            Number(request.params.id),
+            request.body.interview
+          );
         }, 1000);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   });
 
   router.delete("/appointments/:id", (request, response) => {
@@ -57,9 +63,10 @@ module.exports = (db, updateAppointment) => {
       return;
     }
 
-    db.query(`DELETE FROM interviews WHERE appointment_id = $1::integer`, [
-      request.params.id
-    ]).then(() => {
+    db.query(
+      "DELETE FROM interviews WHERE appointment_id = $1::integer",
+      [request.params.id]
+    ).then(() => {
       setTimeout(() => {
         response.status(204).json({});
         updateAppointment(Number(request.params.id), null);
